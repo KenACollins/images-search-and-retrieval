@@ -9,6 +9,7 @@ class App extends React.Component {
     state = { images: [] };
 
     onSearchSubmit = async term => {
+        console.log(`Search term: ${term}`);    // TESTING
         const response = await giphy.get('/v1/gifs/search', {
             params: {
                 q: term,
@@ -16,19 +17,15 @@ class App extends React.Component {
             }
         });
         
-        this.setState({ images: response.data.data, response });
-        console.log(this.state.images);
+        this.setState({ images: response.data.data });
+        console.log('images', this.state.images);   // TESTING
     };
-
-    componentDidMount() {
-        this.onSearchSubmit('cars');
-    }
 
     render() {
         return (
-            <div>
-                <SearchBar />
-                <ImageList />
+            <div className="ui container" style={{marginTop: '30px'}}>
+                <SearchBar onSubmit={this.onSearchSubmit} />
+                <ImageList images={this.state.images} />
             </div>
         );
     }
