@@ -3,6 +3,7 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));   /* Automatically decide number of columns based on space, each one equally sized 200px wide. */
     grid-gap: 0 10px;           /* Add 0 space between rows (vertical) and 10px space between columns (horizontal) in grid so images don't butt up against each other. */
     grid-auto-rows: 10px;       /* Decide how tall each row will be.  Images will span multiple rows based on height but a small number ensures we don't have big gaps. */
+    text-align: center;         /* Center the content horizontally so that on small screens where only one column appears it will be in center, not left aligned. */
 }
 
 .image-list img {
