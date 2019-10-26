@@ -9,7 +9,6 @@ class App extends React.Component {
     state = { images: [] };
 
     onSearchSubmit = async term => {
-        console.log(`Search term: ${term}`);    // TESTING
         const response = await giphy.get('/v1/gifs/search', {
             params: {
                 q: term,
@@ -18,7 +17,6 @@ class App extends React.Component {
         });
         
         this.setState({ images: response.data.data });
-        console.log('images', this.state.images);   // TESTING
     };
 
     render() {

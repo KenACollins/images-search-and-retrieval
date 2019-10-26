@@ -1,10 +1,12 @@
 import React from 'react';
 import ImageCard from './ImageCard';
 
-const ImageList = () => {
-    return (
-        <div>Lots of Image Cards here</div>
-    );
+const ImageList = props => {
+    const images = props.images.map(image => {
+        return <ImageCard key={image.id} image={image} />;
+    });
+
+    return <div>{images}</div>;
 };
 
 export default ImageList;
