@@ -1,2 +1,7 @@
 node_modules
-dev.js
+
+# Ideally, dev.js file containing Giphy API key for development SHOULD NOT BE COMMITTED TO GIT. Unfortunately, for some unknown
+# reason, production build of app deployed on Heroku cloud server is not setting process.env.NODE_ENV to 'production' so 
+# src/config/keys.js falls through to dev path. Therefore, Giphy API key for production cannot be retrieved. 
+# As a workaround, dev.js must be exposed. - Ken A Collins, 10/27/19
+#dev.js
