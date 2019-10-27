@@ -13,7 +13,6 @@ const getImages = async (searchTerm = '', currentOffset = 0) => {
                 offset: currentOffset
             }
         });
-        console.log("Using https URL");
         return response;
     }
     catch (err) {
