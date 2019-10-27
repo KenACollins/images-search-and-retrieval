@@ -1,3 +1,3 @@
 module.exports = {
-    giphyApiKey: 'Insert variable that will return production API key here'
+    giphyApiKey: process.env.GIPHY_API_KEY
 };
