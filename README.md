@@ -18,11 +18,11 @@ Main component at top of hierarchy.
 
 Displays an input field with a hardcoded label.
 
-#### ImageList
+### ImageList
 
 Using array of images, produces a list ImageCard components.
 
-Has an accompanying CSS stylesheet file for styling the images in a grid, supporting all images of the same width but different heights.
+Has an accompanying CSS stylesheet file for styling the images in a grid, accounting for images of the same width but different heights.
 
 ### ImageCard
 
