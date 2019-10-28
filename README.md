@@ -1,68 +1,39 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Images Search and Retrieval
+This web application provides an input box to enter a search term, then retrieves and displays images matching the criteria in an infinitely scrollable area. It accesses Giphy API through REST calls. 
 
-## Available Scripts
+## Try It Out!
+Launch https://shrouded-ocean-92988.herokuapp.com/ in your web browser. If you scroll to the bottom of the images, a new set will automatically be retrieved and the web page will grow by another 50 images. There is no need to click a button to retrieve more. 
 
-In the project directory, you can run:
+In case you are unfamiliar with Heroku, they assign ridiculous subdomains to each project when you are using a free account as I am. This is where "shrouded-ocean-92988" comes from.
 
-### `yarn start`
+## Design
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+I coded the solution in React, creating the following components:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### App
 
-### `yarn test`
+Main component at top of hierarchy.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### SearchBar
 
-### `yarn build`
+Displays an input field with a hardcoded label.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### ImageList
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Using array of images, produces a list ImageCard components.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Has an accompanying CSS stylesheet file for styling the images in a grid, supporting all images of the same width but different heights.
 
-### `yarn eject`
+### ImageCard
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Displays an individual image.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Third Party Tools
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Axios
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+I opted to use axios for Ajax calls instead of fetch() since I like the way I can set HTTP request headers in axios although it turned out that the Giphy API key did not need to be passed in an Accept header, just on the URL.
 
-## Learn More
+### Semantic UI
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+I am an engineer (electrical engineer at heart), not a UX designer, so when I need sample designs I rely on Semantic UI, https://semantic-ui.com/.
