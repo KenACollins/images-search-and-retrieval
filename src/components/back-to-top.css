@@ -1,0 +1,50 @@
+/* === BACK TO TOP FLOATER === */
+/* This is code 1 of 3.  Other two places are in HTML file and JS library. */
+#backToTop {
+    width: 50px;            /* Create 50px by 50px square container. */
+    height: 50px;
+    border-radius: 50%;     /* Convert square to circular container. */
+    border-width: 0px;      /* Prevent unwanted thickness surrounding circular container. */
+    position: fixed;        /* Lock floating circle to bottom right corner of viewport, 10px from right and bottom. */
+    right: 10px;
+    bottom: 10px;
+    cursor: pointer;        /* When cursor is over the circle, change it to a pointer to indicate item is clickable. */
+    background-color: rgba(1, 178, 198, 1);     /* Blue background with no transparency.  Do not want to see through to web page beneath. */
+    z-index: 50;            /* Keep 'back to top' floater on top so its color does not fade over images. */
+    display: none;          /* Initially hide the circular 'back to top' floater when user is at top of web page. */
+}
+
+#backToTop span {           /* Styling of span tag embedded within anchor tag that produces the white triangle inside the circular floater. */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -12px;
+    height: 0;
+    width: 0;
+    border: 8px solid transparent;
+    border-bottom-color: rgb(255, 255, 255);    /* White. */
+}
+
+#backToTop:hover {          /* Styling indicating user is hovering over 'back to top' floater. */
+    background-color: rgb(255, 102, 0, 1);      /* Orange background with no transparency.  Do not want to see through to web page beneath. */
+}
+
+.fadeIn {                   /* Styling controlled in JavaScript code for fading in appearance of 'back to top' floater as user scrolls down page. */
+    display: block !important;  /* Animation cannot start unless JS code can find #backToTop element but it will immediately be invisble until faded in. */
+    animation: fadeInKF 1s; /* Apply animation to keyframe fadeInKF with duration of one second. */
+}
+
+@keyframes fadeInKF {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.fadeOut {                  /* Styling controlled in JavaScript code for fading out appearance of 'back to top' floater when it arrives at top of page. */
+    animation: fadeOutKF 1s;/* Apply animation to keyframe fadeOutKF with duration of one second. */
+}
+
+@keyframes fadeOutKF {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
