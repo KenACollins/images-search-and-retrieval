@@ -42,11 +42,11 @@ https://developers.giphy.com/docs/api#quick-start-guide
 
 ### Axios
 
-I opted to use axios for Ajax calls instead of fetch() since I like the way I can set HTTP request headers in axios although it turned out that the Giphy API key did not need to be passed in an Accept header, just on the URL.
+I opted to use axios for Ajax calls instead of fetch() since I like the way I can set HTTP request headers in axios.
 
 ### Semantic UI
 
-I am an engineer (electrical engineer at heart), not a UX designer, so when I need sample designs I rely on Semantic UI, https://semantic-ui.com/.
+I am an engineer (electrical engineer at heart), not a UX designer, so when I need to whip up a proof of concept I rely on Semantic UI, https://semantic-ui.com/.
 
 ## Features
 
@@ -58,19 +58,23 @@ Upon entry of a search term, the screen will be filled with related images. As y
 
 On medium sized screens and larger, the images that are returned by the search will fill five columns across the center of the display which white space on the left and right sides.
 
-If you shrink your browser or test this app on a device with a smaller screen, you will see that the number of columns of images gets reduced to four, then three, two, and finally one on the smallest devices. In all cases, the columns of images are centered relative to their container so they are never left-aligned, for example.
+If you shrink your browser or test this app on a device with a smaller screen, you will see that the number of columns of images gets reduced to four, then three, two, and finally one on the smallest devices. In all cases, the columns of images are centered relative to their container (not left-aligned).
 
 ### Efficient Use of Space
 
-The images are all the same width, but different heights. If the images were laid out in a grid of equal heights based on the tallest image in the results, there would be a lot of white space -- a lot of gaps. To tighten up the arrangement of the images, CSS Grid has been employed.
+The images are all the same width, but different heights. If the images were laid out in a grid of equal heights based on the tallest image in the results, there would be a lot of white space -- a lot of gaps. To tighten up the arrangement of the images, I employed the help of CSS Grid.
 
 ### Back to Top Floater
 
-Once you scroll down just enough for the search box to disappear, in the bottom right corner of the screen a round blue icon containing a white triangle will fade in. If you hover your mouse over it, it will turn orange and the text "Back to Top" will appear. Click on the icon and the screen will move itself upward in a graceful manner (depending on the web browser, at this time, Edge, IE, and Safari do not support the smooth behavior and will jump to the top instantly) to the top of the screen so you can enter a new search term.
+Once you scroll down just enough for the search box to disappear, in the bottom right corner of the screen a round blue icon containing a white triangle will fade in. If you hover your mouse over it, it will turn orange and the text "Back to Top" will appear. 
+
+Click on the icon and the screen will move itself upward in a graceful manner (see note below) to the top of the screen so you can enter a new search term.
+
+Note: At this time, Edge, IE, and Safari browsers do not support the smooth behavior and will jump to the top instantly.
 
 ### Error Handling
 
-The app handles, in a graceful manner, support for three types of error conditions when there are no image results to display:
+The app handles, in a user friendly manner, support for three types of error conditions when there are no image results to display:
 
 * User presses Enter but has not typed anything in search term field.
 * User has entered such an obscure (or totally misspelled) search term such that there are zero results.
