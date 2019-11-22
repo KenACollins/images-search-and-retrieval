@@ -18,6 +18,8 @@ I coded the solution in React, creating the following components:
 
 Main component at top of hierarchy.
 
+Also sets up the 'back to top' floater, relying on an accompanying CSS stylesheet.
+
 ### SearchBar
 
 Displays an input field with a hardcoded label.
