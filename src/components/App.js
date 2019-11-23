@@ -86,9 +86,9 @@ class App extends React.Component {
     /**
      * This utility function formats large numbers with thousands separator. Example: 12345 => 12,345
      */
-    formatNumber = num => {
+    formatNumber(num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-    };
+    }
 
     componentDidMount() {
         /**
