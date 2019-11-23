@@ -8,6 +8,7 @@ class App extends React.Component {
     state = { previousSearchTerm: '', images: [], totalCount: 0, noResultsCode: 0 };
     maxResultsPerPage = 50; // We only want to retrieve 50 images per API call.
     currentOffset = 0;      // Akin to page number, index position starting point for next batch of results.
+    backToTopRef = React.createRef();   // Access 'back to top' button through React, NOT in DOM with document.getElementById('backToTop').
 
     /**
      * This function is called when the user types a search term into the input field and presses Enter. It replaces any history 
@@ -17,10 +18,7 @@ class App extends React.Component {
      * pressing Enter will reset the screen to the first batch of images.
      */
     onSearchSubmit = async term => {
-        // Remove any extraneous white space characters in beginning or end of search term.
-        // term = term.trim();
-        
-        // Display a message if user pressed Enter but did not type anything into the search input field.
+        // Display a message and reset images array if user pressed Enter but did not type anything into the search input field.
         if (term === '') {
             // this.setState({ noResultsCode: 1 });
             this.setState({ previousSearchTerm: '', images: [], noResultsCode: 1 });
@@ -97,7 +95,7 @@ class App extends React.Component {
          * Detect if user has scrolled to the bottom of the screen so that another batch of images matching the search criteria
          * can automatically be retrieved without the need for the user to click a button or do anything special.
          * 
-         * If user has scrolled enough for the search field to disappear, fade in 'back to top' floater.
+         * If user has scrolled enough for the search field to disappear, fade in 'back to top' button.
          * 
          * FYI, window.onscroll must be set to an arrow function or else 'this' will not be resolved. 
          */
@@ -112,67 +110,47 @@ class App extends React.Component {
                 this.addMoreImages();
             }
 
-            // ===================
-            // Back to Top Feature
-            // ===================
-            // If distance from top exceeds 200 pixels, fade in 'back to top' floater.
+            // If distance from top exceeds 200 pixels, fade in 'back to top' button.
             if (scrollTop > 200) {
-                document.getElementById('backToTop').classList.remove('fadeOut');
-                document.getElementById('backToTop').classList.add('fadeIn');
+                this.backToTopRef.current.classList.remove('fadeOut');
+                this.backToTopRef.current.classList.add('fadeIn');
             }
-            // Otherwise, user is near top of page, fade out 'back to top' floater.
+            // Otherwise, user is near top of page, fade out 'back to top' button.
             else {
-                document.getElementById('backToTop').classList.remove('fadeIn');
-                document.getElementById('backToTop').classList.add('fadeOut');
+                this.backToTopRef.current.classList.remove('fadeIn');
+                this.backToTopRef.current.classList.add('fadeOut');
             }
         }
-
-        // When user clicks on 'back to top' floater, quickly scroll web page up to the top. Occurs faster than jQuery since timing can't be set.
-        // Notes: 
-        // 1. Some browsers do not support smooth option parameter, so web page jumps to top: Edge, IE, and Safari (both macOS and iOS).
-        // 2. window.scroll({top: 0, left: 0, behavior: 'smooth' }) has identical effect as document.body.scrollIntoView({ behavior: 'smooth' }) 
-        //    but window.scroll() is not supported on IE and Safari for iOS so 'back to top' feature would not be available on those browsers. It 
-        //    is therefore better to go with scrollIntoView() which is supposedly supported by all browsers, even if smooth behavior is not.
-        // 3. Applying scrollIntoView() on body tag works. Can also apply on an ID, i.e., document.getElementById('root') or other HTML tag, i.e.,
-        //    document.querySelector('h1').
-        document.getElementById('backToTop').addEventListener('click', () => {
-            document.body.scrollIntoView({ behavior: 'smooth' });
-        });
-
-        // Because 'back to top' floater is initially hidden when page loads with scroll position at the top, we must assign "display: none".
-        // However, once fade in animation begins or fade out animation ends, we control the display property, overriding its default.
-        // We need this in place before the fade out animation starts, because #backToTop element must be visible for JS code to find it.
-        document.getElementById('backToTop').addEventListener('animationstart', (event) => {
-            if (event.animationName === 'fadeInKF') {
-                document.getElementById('backToTop').style.display = 'block';
-            }
-        });
-
-        // Only when the fading out animation has concluded do we restore the "display: none" setting to the #backToTop element.
-        document.getElementById('backToTop').addEventListener('animationend', (event) => {
-            if (event.animationName === 'fadeOutKF') {
-                document.getElementById('backToTop').style.display = 'none';
-            }
-        });
     }
 
-    componentWillUnmount() {
-        // Best practices: Remove event listeners when component is going away.
-        document.getElementById('backToTop').removeEventListener('click', () => {
-            document.body.scrollIntoView({ behavior: 'smooth' });
-        });
+    /**
+     * When user clicks on 'back to top' button, quickly scroll web page up to the top. Some web browsers (Edge, IE, and Safari) do not 
+     * support smooth scroll behavior, so web page jumps to top.
+     */
+    onClick() {
+        document.body.scrollIntoView({ behavior: 'smooth' });
+    }
 
-        document.getElementById('backToTop').removeEventListener('animationstart', (event) => {
-            if (event.animationName === 'fadeInKF') {
-                document.getElementById('backToTop').style.display = 'block';
-            }
-        });
+    /**
+     * Because 'back to top' button is initially hidden when page loads with scroll position at the top, we must assign "display: none".
+     * However, once fade in animation begins or fade out animation ends, we control the display property, overriding its default.
+     * We need this in place before the fade out animation starts, because #backToTop element must be visible for JS code to find it.
+     * @param {SyntheticEvent} event - React event wrapper for cross-browser compatibility, not to be confused with DOM event handling
+     */
+    onAnimationStart(event) {
+        if (event.animationName === 'fadeInKF') {
+            event.target.style.display = 'block';
+        }
+    }
 
-        document.getElementById('backToTop').removeEventListener('animationend', (event) => {
-            if (event.animationName === 'fadeOutKF') {
-                document.getElementById('backToTop').style.display = 'none';
-            }
-        });
+    /**
+     * Only when the fading out animation has concluded for 'back to top' button do we restore the "display: none" setting.
+     * @param {SyntheticEvent} event - React event wrapper for cross-browser compatibility, not to be confused with DOM event handling 
+     */
+    onAnimationEnd(event) {
+        if (event.animationName === 'fadeOutKF') {
+            event.target.style.display = 'none';
+        }
     }
 
     render() {
@@ -181,7 +159,13 @@ class App extends React.Component {
                 <SearchBar onSubmit={this.onSearchSubmit} />
                 <ImageList images={this.state.images} />
                 <div>{this.showNoResultsMessage()}</div>
-                <button id="backToTop" title="Back to Top"><span></span></button>
+                <button id="backToTop" title="Back to Top" ref={this.backToTopRef}
+                    onClick={this.onClick}
+                    onAnimationStart={this.onAnimationStart}
+                    onAnimationEnd={this.onAnimationEnd}
+                    >
+                    <span></span>
+                </button>
             </div>
         );
     }
